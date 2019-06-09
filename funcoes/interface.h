@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "./cliente.h"
+#include "./conta.h"
 
 void exibirMenu() {
 
@@ -30,7 +31,7 @@ void executaOpcao(int opcaoEscolhida, Banco *banco) {
         cadastrarCliente(banco);
         break;
     case 2:
-        printf("Cadastrar conta");
+        cadastrarConta(banco);
         break;
     case 3:
         printf("Realizar saque");
