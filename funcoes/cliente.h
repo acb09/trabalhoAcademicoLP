@@ -1,3 +1,11 @@
+#define MENOR 1
+#define IGUAL 2
+#define MAIOR 3
+#define DIFERENTE 4
+
+
+
+
 void lerId(Banco *banco);
 void lerNome(Banco *banco);
 void lerDataNascimento(Banco *banco);
@@ -9,8 +17,14 @@ void exibirCliente(Cliente cliente);
 void listarClientes(Banco *banco);
 void incrementarQuantidadeDeClientes(Banco *banco);
 void incrementarQuantidadeDeContas(Banco *banco);
-void mensagemPadrao(char palavra[20]);
+void exibirMensagemDigite(char palavra[20]);
 int listaCheia(Banco *banco);
+int nomeInvalido(char* nome, int *sinalizador);
+void quantidadeCaracteresIncompativel(char* palavra, int quantidadeMinima, int medida, int *sinalizador);
+int dataInvalida(char* data, int *sinalizador);
+void formatoInvalido(char* data, int *sinalizador);
+
+
 
 
 
@@ -31,8 +45,11 @@ void cadastrarCliente(Banco *banco) {
 
 
 
+
+
+
 void lerId(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   (*banco).clientes[posicaoNoVetor].idCliente = posicaoNoVetor;
 }
 
@@ -40,27 +57,74 @@ void lerId(Banco *banco) {
 
 
 
+
+
 void lerNome(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeNome = sizeof((*banco).clientes[posicaoNoVetor].nome);
-  (*banco).clientes[posicaoNoVetor].nome;
-  mensagemPadrao("nome");
-  setbuf(stdin, NULL);
-  fgets( (*banco).clientes[posicaoNoVetor].nome, tamanhoEmBytesDeNome, stdin);
-  setbuf(stdin, NULL);
+  int invalido;
+  do {
+    invalido=0;
+    exibirMensagemDigite("nome");
+    setbuf(stdin, NULL);
+    fgets((*banco).clientes[posicaoNoVetor].nome, tamanhoEmBytesDeNome, stdin);
+    setbuf(stdin, NULL);
+    nomeInvalido((*banco).clientes[posicaoNoVetor].nome, &invalido);
+    if (invalido) printf("\nNome inválido!\n");
+  } while (invalido);
 }
 
 
 
 
 
+
+
+int nomeInvalido(char* nome, int *sinalizador) {
+  quantidadeCaracteresIncompativel(nome, 3, MENOR, sinalizador);
+  return (*sinalizador);
+}
+
+
+
+
+
+
+
 void lerDataNascimento(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeDataNascimento = sizeof((*banco).clientes[posicaoNoVetor].dataNascimento);
-  mensagemPadrao("nascimento");
-  fgets((*banco).clientes[posicaoNoVetor].dataNascimento, tamanhoEmBytesDeDataNascimento, stdin);
-  setbuf(stdin, NULL);
-  
+  int invalido;
+  do {
+    invalido = 0;
+    exibirMensagemDigite("nascimento");
+    fgets((*banco).clientes[posicaoNoVetor].dataNascimento, tamanhoEmBytesDeDataNascimento, stdin);
+    setbuf(stdin, NULL);
+    dataInvalida((*banco).clientes[posicaoNoVetor].dataNascimento, &invalido);
+    if (invalido) printf("\nData inválida!\n");
+  } while (invalido);
+}
+
+
+
+
+
+
+int dataInvalida(char* data, int *sinalizador) {
+  quantidadeCaracteresIncompativel(data, 10, DIFERENTE, sinalizador);
+  formatoInvalido(data, sinalizador);
+  return (*sinalizador);
+}
+
+
+
+
+
+// FALTA IMPLEMENTAR
+void formatoInvalido(char *data, int *sinalizador) {
+  if (sinalizador) return;
+  (*sinalizador) = 0;
+  //  Código que valida a data
 }
 
 
@@ -68,25 +132,36 @@ void lerDataNascimento(Banco *banco) {
 
 
 void lerCPF(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeCPF = sizeof((*banco).clientes[posicaoNoVetor].CPF);
-  mensagemPadrao("CPF");
-  fgets((*banco).clientes[posicaoNoVetor].CPF, tamanhoEmBytesDeCPF, stdin);
-  setbuf(stdin, NULL);
-  
+  int invalido;
+  do {
+    invalido = 0;
+    exibirMensagemDigite("CPF");
+    fgets((*banco).clientes[posicaoNoVetor].CPF, tamanhoEmBytesDeCPF, stdin);
+    setbuf(stdin, NULL);
+    quantidadeCaracteresIncompativel((*banco).clientes[posicaoNoVetor].CPF, 11, DIFERENTE, &invalido);
+    if (invalido) printf("\nCPF inválido!\n");
+  } while (invalido);
 }
 
 
 
 
 
+
 void lerRG(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeRG = sizeof((*banco).clientes[posicaoNoVetor].RG);
-  mensagemPadrao("RG");
-  fgets((*banco).clientes[posicaoNoVetor].RG, tamanhoEmBytesDeRG, stdin);
-  setbuf(stdin, NULL);
-  
+  int invalido;
+  do {
+    invalido = 0;
+    exibirMensagemDigite("RG");
+    fgets((*banco).clientes[posicaoNoVetor].RG, tamanhoEmBytesDeRG, stdin);
+    setbuf(stdin, NULL);
+    quantidadeCaracteresIncompativel((*banco).clientes[posicaoNoVetor].RG, 5, MENOR, &invalido);
+    if (invalido) printf("\nRG inválido!\n");
+  } while (invalido);
 }
 
 
@@ -94,12 +169,17 @@ void lerRG(Banco *banco) {
 
 
 void lerTelefone(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeTelefone = sizeof((*banco).clientes[posicaoNoVetor].telefone);
-  mensagemPadrao("telefone");
-  fgets((*banco).clientes[posicaoNoVetor].telefone, tamanhoEmBytesDeTelefone, stdin);
-  setbuf(stdin, NULL);
-  
+  int invalido;
+  do {
+    invalido = 0;
+    exibirMensagemDigite("telefone");
+    fgets((*banco).clientes[posicaoNoVetor].telefone, tamanhoEmBytesDeTelefone, stdin);
+    setbuf(stdin, NULL);
+    quantidadeCaracteresIncompativel((*banco).clientes[posicaoNoVetor].telefone, 10, MENOR, &invalido);
+    if (invalido) printf("\nTelefone inválido!\n");
+  } while (invalido);
 }
 
 
@@ -108,12 +188,17 @@ void lerTelefone(Banco *banco) {
 
 
 void lerEmail(Banco *banco) {
-  int posicaoNoVetor = (*banco).quantidadeClientes;
+  long int posicaoNoVetor = (*banco).quantidadeClientes;
   int tamanhoEmBytesDeEmail = sizeof((*banco).clientes[posicaoNoVetor].email);
-  mensagemPadrao("email");
-  fgets((*banco).clientes[posicaoNoVetor].email, tamanhoEmBytesDeEmail, stdin);
-  setbuf(stdin, NULL);
-  
+  int invalido;
+  do {
+    invalido = 0;
+    exibirMensagemDigite("email");
+    fgets((*banco).clientes[posicaoNoVetor].email, tamanhoEmBytesDeEmail, stdin);
+    setbuf(stdin, NULL);
+    quantidadeCaracteresIncompativel((*banco).clientes[posicaoNoVetor].email, 6, MENOR, &invalido);
+    if (invalido) printf("\nEmail inválido!\n");
+  } while (invalido);
 }
 
 
@@ -166,8 +251,8 @@ void exibirCliente(Cliente cliente) {
 
 
 
-void mensagemPadrao(char palavra[20]) {
-  printf("\nDigite seu %s: ", palavra);
+void exibirMensagemDigite(char palavra[20]) {
+  printf("\nDigite o %s: ", palavra);
 }
 
 
@@ -176,5 +261,21 @@ void mensagemPadrao(char palavra[20]) {
 
 
 int listaCheia(Banco *banco) {
-  return (*banco).quantidadeClientes == MAXUSUARIOS;
+  int estaCheia = (*banco).quantidadeClientes == MAXUSUARIOS;
+  if (estaCheia) printf("\nLista cheia! Não é possível inserir mais novos usuários.\n");
+  return estaCheia;
+}
+
+
+
+
+
+
+void quantidadeCaracteresIncompativel(char* palavra, int quantidade, int medida, int *sinalizador) {
+  printf("%s = %d", palavra, strlen(palavra)-1);
+  if ((*sinalizador)) return; // Se sinalizaor for verdadeiro ele não precisa fazer nada alem de aguardar o retorno da função pai como invalido
+  if (medida == MENOR) (*sinalizador) = (strlen(palavra)-1 < quantidade) ? 1 : 0;
+  // else if (medida == IGUAL) (*sinalizador) = (strlen(palavra)-1 == quantidade) ? 1 : 0;
+  else if (medida == DIFERENTE) (*sinalizador) = (strlen(palavra)-1 != quantidade) ? 1 : 0;
+  else if (medida == MAIOR) (*sinalizador) = (strlen(palavra)-1 > quantidade) ? 1 : 0;
 }

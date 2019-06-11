@@ -64,12 +64,12 @@ void limparTela() {
 }
 
 void aguardaUsuarioPressionarEnter() {
-    printf("\n\n");
+    printf("\n\nPressione qualquer tecla para voltar para o menu.");
     // system("pause");
     getch();
 }
 
-void inicializarBanco(Banco *banco) {
+void resetarValoresDeBanco(Banco *banco) {
     (*banco).posicaoUltimoUsuarioCadastrado = 0;
     (*banco).quantidadeClientes = 0;
     (*banco).quantidadeContas = 0;
