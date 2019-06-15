@@ -14,15 +14,20 @@ void cadastrarConta(Banco *banco) {
   // lerTelefone(banco);
   // lerEmail(banco);
   // incrementarQuantidadeDeClientes(banco);
-  printf("Usuário cadastrado com sucesso!");
+  printf("Conta ativada!");
 }
 
+
+
+// void lerId(banco) {
+//   printf("Digite o ID do usuário a ser cadastrado");
+// }
 
 
 
 
 // int listaCheia(Banco *banco) {
-//   int estaCheia = (*banco).quantidadeClientes == MAXUSUARIOS;
-//   if (estaCheia) printf("\nLista cheia! Não é possível inserir mais novos usuários.\n");
+//   int estaCheia = (*banco).quantidadeContas == MAXUSUARIOS;
+//   if (estaCheia) printf("\nLista cheia! Não é possível inserir mais novas contas.\n");
 //   return estaCheia;
 // }

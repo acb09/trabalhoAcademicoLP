@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 #include "./structs/banco.h"
+#include "./funcoes/banco.h"
+#include "./funcoes/cliente.h"
+#include "./funcoes/conta.h"
 #include "./funcoes/interface.h"
 
 int main() {

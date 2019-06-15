@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include "./cliente.h"
-#include "./conta.h"
-
 void exibirMenu() {
 
     printf("Escolha uma opção abaixo: \n");
@@ -46,7 +40,7 @@ void executaOpcao(int opcaoEscolhida, Banco *banco) {
         listarClientes(banco);
         break;
     case 7:
-        printf("Busca por CPF");
+        // Code
         break;
     case 8:
         printf("Busca comparada");
@@ -70,7 +64,6 @@ void aguardaUsuarioPressionarEnter() {
 }
 
 void resetarValoresDeBanco(Banco *banco) {
-    (*banco).posicaoUltimoUsuarioCadastrado = 0;
     (*banco).quantidadeClientes = 0;
     (*banco).quantidadeContas = 0;
     (*banco).quantidadeMovimentacoes = 0;

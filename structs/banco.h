@@ -8,10 +8,9 @@
 
 typedef struct Bancos {
 
-    int quantidadeClientes;
-    int posicaoUltimoUsuarioCadastrado;
-    int quantidadeContas;
-    int quantidadeMovimentacoes;
+    long int quantidadeClientes;
+    long int quantidadeContas;
+    long int quantidadeMovimentacoes;
     
     Cliente clientes[MAXUSUARIOS];
     Conta contas[MAXCONTAS];
